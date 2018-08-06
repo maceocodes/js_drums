@@ -58,11 +58,30 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+
+  //Listen for a key(keydown) pressed and run the anonymous event(e) function
+  /*look for the audio element with a data-key corresponding to the keycode 
+  and assign it to the event(e)*/
+  //stops the function from running all together
+  //play the audio(element has been passed the keycode via e)
   window.addEventListener('keydown', function(e) { 
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    console.log(audio);
-    if(!audio) return; //stops the function from running all together
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+    if(!audio) return; 
+    audio.currentTime = 0; //rewind to start
+    audio.play();
+    key.classList.add('playing');
+    key.currentStyle = 0;
   });
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') return;
+  };
+
+
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
 </script>
 
 
